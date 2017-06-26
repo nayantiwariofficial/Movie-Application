@@ -12,13 +12,15 @@ public class MovieItem implements Serializable {
     private String overview;
     private String releaseDate;
     private double vote_average;
+    private boolean favourite;
 
-    public MovieItem(String title, String moviePoster, String overview, String releaseDate, double vote_average) {
+    public MovieItem(String title, String moviePoster, String overview, String releaseDate, double vote_average, boolean favourite) {
         this.title = title;
         this.moviePoster = moviePoster;
         this.overview = overview;
         this.releaseDate = releaseDate;
         this.vote_average = vote_average;
+        this.favourite = favourite;
     }
 
     public String getTitle() {
@@ -39,5 +41,9 @@ public class MovieItem implements Serializable {
 
     public double getVote_average() {
         return vote_average;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
     }
 }

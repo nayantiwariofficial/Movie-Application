@@ -10,10 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.net.URL;
+import android.view.View;
+import android.widget.ImageButton;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +22,12 @@ public class MainActivity extends AppCompatActivity implements SomeAdapter.ListI
     public static final String MOVIE_DESC_KEY = "MOVIE_DESC_KEY";
     public static final String MOVIE_VOTE_COUNT_KEY = "MOVIE_VOTE_COUNT_KEY";
     public static final String MOVIE_RELEASE_DATE_KEY = "MOVIE_RELEASE_DATE_KEY";
+    public static final String MOVIE_FAVOURITE_KEY = "MOVIE_FAVOURITE_KEY";
     private List<MovieItem> data;
 
     private String sortOrder = "default";
+
+    private boolean favouriteValue = false;
 
     private static final String TAG = "MainActivity";
     RecyclerView recyclerView;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements SomeAdapter.ListI
         Log.i(TAG, "onCreateLoader: Sorting By: " + sortOrder);
         String movieUrl = NetworkUtils.buildUrl(sortOrder).toString();
         Log.i(TAG, "onCreateLoader: " + movieUrl);
-        return new MovieLoader(this, movieUrl);
+        return new MovieLoader(this, movieUrl, favouriteValue);
     }
 
     @Override
@@ -72,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements SomeAdapter.ListI
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        String wtf = "wtf is this";
         Intent intent = new Intent(MainActivity.this, MovieInfoActivity.class);
         MovieItem movieItem = data.get(clickedItemIndex);
         intent.putExtra(MOVIE_TITLE_KEY, movieItem.getTitle());
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements SomeAdapter.ListI
         intent.putExtra(MOVIE_DESC_KEY, movieItem.getOverview());
         intent.putExtra(MOVIE_VOTE_COUNT_KEY, movieItem.getVote_average());
         intent.putExtra(MOVIE_RELEASE_DATE_KEY, movieItem.getReleaseDate());
+        intent.putExtra(MOVIE_FAVOURITE_KEY, favouriteValue);
 
         startActivity(intent);
     }
@@ -103,6 +104,26 @@ public class MainActivity extends AppCompatActivity implements SomeAdapter.ListI
             NetworkUtils.buildUrl("popularity");
             getSupportLoaderManager().restartLoader(1, null, this).forceLoad();
             return true;
+        }
+    }
+
+    public void change_image(View view) {
+        ImageButton emptyStar = (ImageButton) findViewById(R.id.icons8_star_48);
+        ImageButton filledStar = (ImageButton) findViewById(R.id.icons8_starfilled_48);
+
+        int button_id = view.getId();
+
+        switch (button_id){
+            case R.id.icons8_star_48:
+                emptyStar.setVisibility(View.GONE);
+                filledStar.setVisibility(View.VISIBLE);
+                favouriteValue = true;
+                break;
+            case R.id.icons8_starfilled_48:
+                emptyStar.setVisibility(View.VISIBLE);
+                filledStar.setVisibility(View.GONE);
+                favouriteValue = false;
+                break;
         }
     }
 }

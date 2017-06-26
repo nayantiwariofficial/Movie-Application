@@ -14,14 +14,14 @@ public class NetworkUtils {
     final static String MOVIE_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
     private static final String API_KEY = "677f4650f749724420f60f9aa0c83b2b";
 
-    final static String MOVIE_ID_BASE_URL = "https://api.themoviedb.org/3/movie/";
+//    final static String MOVIE_ID_BASE_URL = "https://api.themoviedb.org/3/movie/";
 
     final static String PARAM_QUERY_MOVIE = "api_key";
     final static String SORT_BY = "sort_by";
 
 
     public static URL buildUrl(String sortBy) {
-        Uri builtUri = null;
+        Uri builtUri;
         switch (sortBy) {
             case "popularity":
                 sortBy = "popularity.desc";

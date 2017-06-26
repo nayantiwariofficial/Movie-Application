@@ -1,13 +1,6 @@
 package com.example.nayantiwari.movieapitesting;
 
-import android.graphics.Movie;
-import android.text.TextUtils;
 import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,20 +19,19 @@ public class QueryUtils {
 
     private static final String LOG_TAG = "QueryUtils";
 
-    public static List<MovieItem> fetchMovieData(String requestUrl) {
+    public static List<MovieItem> fetchMovieData(String requestUrl, boolean favoriteValue) {
 
         URL url = createUrl(requestUrl);
 
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
+            Log.i(LOG_TAG, "fetchMovieData: " + jsonResponse);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        List<MovieItem> movies = ExtractJSON.extractFeatureFromJson(jsonResponse);
-
-        return movies;
+        return ExtractJSON.extractFeatureFromJson(jsonResponse, favoriteValue);
     }
 
     private static String makeHttpRequest(URL url) throws IOException {
@@ -49,6 +40,8 @@ public class QueryUtils {
         if (url == null) {
             return jsonResponse;
         }
+
+        Log.i(LOG_TAG, "makeHttpRequest: " + url);
 
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;

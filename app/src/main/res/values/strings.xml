@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">MovieApiTesting</string>
-    <string name="sort_by">Sort By</string>
-    <string name="descending">Descending</string>
     <string name="popularity">Popularity</string>
     <string name="rating">Rating</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
+    <string name="movie_poster">Movie Poster</string>
 </resources>

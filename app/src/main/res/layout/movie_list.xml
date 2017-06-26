@@ -18,20 +18,42 @@
             android:id="@+id/iv_demo"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            tools:decription="Movie Name"
             android:scaleType="fitXY"
+            android:contentDescription="@string/movie_poster"
             tools:src="@drawable/placeholderimage" />
 
+        <ImageButton
+            android:id="@+id/icons8_star_48"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:layout_gravity="top|end"
+            android:onClick="change_image"
+            android:contentDescription="@string/add_to_favorites"
+            android:src="@drawable/icons8_star_48"
+            android:visibility="visible"/>
+
+        <ImageButton
+            android:id="@+id/icons8_starfilled_48"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/remove_from_favorites"
+            android:visibility="gone"
+            android:layout_gravity="top|end"
+            android:onClick="change_image"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icons8_starfilled_48" />
+
         <!--<TextView-->
-            <!--android:id="@+id/tv_url_check"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="bottom"-->
-            <!--android:gravity="center"-->
-            <!--android:padding="16dp"-->
-            <!--android:textSize="22sp"-->
-            <!--tools:text="Some text"-->
-            <!--android:textColor="@android:color/white" />-->
+        <!--android:id="@+id/tv_url_check"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:gravity="center"-->
+        <!--android:padding="16dp"-->
+        <!--android:textSize="22sp"-->
+        <!--tools:text="Some text"-->
+        <!--android:textColor="@android:color/white" />-->
     </FrameLayout>
 
 </LinearLayout>

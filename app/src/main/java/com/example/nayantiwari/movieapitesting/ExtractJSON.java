@@ -18,7 +18,7 @@ public class ExtractJSON {
 
     private static final String TAG = "ExtractJSON";
 
-    public static List<MovieItem> extractFeatureFromJson(String movieJSON) {
+    public static List<MovieItem> extractFeatureFromJson(String movieJSON, boolean favoriteValue) {
 
 
         if (TextUtils.isEmpty(movieJSON)) {
@@ -29,6 +29,8 @@ public class ExtractJSON {
 
         try {
 
+            Log.i(TAG, "extractFeatureFromJson: " + movieJSON);
+
             JSONObject baseJsonResponse = new JSONObject(movieJSON);
             JSONArray movieArray = baseJsonResponse.getJSONArray("results");
 
@@ -38,15 +40,15 @@ public class ExtractJSON {
                 JSONObject currentMovie = movieArray.getJSONObject(i);  // Extract the value for the key called "title"
 
                 String title = currentMovie.getString("title");
+                Log.i(TAG, "extractFeatureFromJson: " + title);
                 String moviePoster = currentMovie.getString("poster_path");
                 String overview = currentMovie.getString("overview");
                 String releaseDate = currentMovie.getString("release_date");
                 double vote_avg = currentMovie.getDouble("vote_average");
+//                long movieId = currentMovie.getLong("id");
 
-                long movieId = currentMovie.getLong("id");
-
-                MovieItem movieItem = new MovieItem(title, moviePoster, overview, releaseDate, vote_avg);
-                Log.i(TAG, "extractFeatureFromJson: " + title +" " + moviePoster + " " + overview + " " + releaseDate + " " + vote_avg);
+                MovieItem movieItem = new MovieItem(title, moviePoster, overview, releaseDate, vote_avg, favoriteValue);
+                Log.i(TAG, "extractFeatureFromJson: " + title +" " + moviePoster + " " + overview + " " + releaseDate + " " + vote_avg + " " + favoriteValue);
 
 
                 movie.add(movieItem);

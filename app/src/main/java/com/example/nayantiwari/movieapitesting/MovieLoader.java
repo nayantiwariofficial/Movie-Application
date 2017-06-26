@@ -1,8 +1,6 @@
 package com.example.nayantiwari.movieapitesting;
 
 import android.content.Context;
-import android.graphics.Movie;
-import android.os.AsyncTask;
 import android.support.v4.content.AsyncTaskLoader;
 
 import java.util.List;
@@ -14,10 +12,12 @@ import java.util.List;
 public class MovieLoader extends AsyncTaskLoader<List<MovieItem>> {
 
     private String mUrl;
+    private boolean favoriteValue;
 
-    public MovieLoader(Context context, String url) {
+    public MovieLoader(Context context, String url, boolean favoriteValue) {
         super(context);
         mUrl = url;
+        this.favoriteValue = favoriteValue;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class MovieLoader extends AsyncTaskLoader<List<MovieItem>> {
         return null;
         }
 
-        return QueryUtils.fetchMovieData(mUrl);
+        return QueryUtils.fetchMovieData(mUrl, favoriteValue);
     }
 
 
