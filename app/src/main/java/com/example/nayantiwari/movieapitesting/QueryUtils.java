@@ -26,7 +26,7 @@ public class QueryUtils {
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
-            Log.i(LOG_TAG, "fetchMovieData: " + jsonResponse);
+//            Log.i(LOG_TAG, "fetchMovieData: " + jsonResponse);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }

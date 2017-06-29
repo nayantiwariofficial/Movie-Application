@@ -1,6 +1,9 @@
 package com.example.nayantiwari.movieapitesting;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,10 +63,14 @@ public class MainActivity extends AppCompatActivity implements SomeAdapter.ListI
     @Override
     public void onLoadFinished(Loader<List<MovieItem>> loader, List<MovieItem> data) {
         SomeAdapter someAdapter = (SomeAdapter) recyclerView.getAdapter();
-        Log.i(TAG, "onLoadFinished: Loaded " + data.size() + " items.");
-        this.data = data;
-        someAdapter.setMovieItems(data);
-        someAdapter.notifyDataSetChanged();
+        if (isNetworkAvailable()) {
+            Log.i(TAG, "onLoadFinished: Loaded " + data.size() + " items.");
+            this.data = data;
+            someAdapter.setMovieItems(data);
+            someAdapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(this, "Please check your internet connection!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -107,23 +116,13 @@ public class MainActivity extends AppCompatActivity implements SomeAdapter.ListI
         }
     }
 
-    public void change_image(View view) {
-        ImageButton emptyStar = (ImageButton) findViewById(R.id.icons8_star_48);
-        ImageButton filledStar = (ImageButton) findViewById(R.id.icons8_starfilled_48);
-
-        int button_id = view.getId();
-
-        switch (button_id){
-            case R.id.icons8_star_48:
-                emptyStar.setVisibility(View.GONE);
-                filledStar.setVisibility(View.VISIBLE);
-                favouriteValue = true;
-                break;
-            case R.id.icons8_starfilled_48:
-                emptyStar.setVisibility(View.VISIBLE);
-                filledStar.setVisibility(View.GONE);
-                favouriteValue = false;
-                break;
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
         }
+        return false;
     }
 }
